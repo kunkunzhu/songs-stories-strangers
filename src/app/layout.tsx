@@ -1,8 +1,22 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+/** @format */
 
-const inter = Inter({ subsets: ["latin"] });
+import type { Metadata } from "next";
+import { Yantramanav, Xanh_Mono } from "next/font/google";
+import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const bodyFont = Yantramanav({
+  subsets: ["latin"],
+  variable: "--body-font",
+  weight: "300",
+});
+
+const displayFont = Xanh_Mono({
+  subsets: ["latin"],
+  variable: "--display-font",
+  weight: "400",
+  style: ["italic", "normal"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +30,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body
+        className={cn(
+          "font-sans flex w-screen h-screen flex-col justify-center items-center",
+          bodyFont.variable,
+          displayFont.variable
+        )}
+      >
+        {children}
+      </body>
     </html>
   );
 }
