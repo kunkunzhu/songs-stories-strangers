@@ -2,25 +2,19 @@
 
 import Image from "next/image";
 import { DisplaySong, Song } from "@/types";
+import { InputLabel } from "./input";
+import Link from "next/link";
 
-const SongVinyl = ({
-  title,
-  displayCover,
-}: {
-  title: string;
-  displayCover: string | null;
-}) => {
+const SongVinyl = ({ title }: { title: string }) => {
   return (
     <div className="flex items-center justify-center border border-gray-200/50 rounded-full w-[250px] h-[250px] bg-black">
       <div className="w-[100px] h-[100px] border border-gray-200/50 drop-shadow-vinyl rounded-full overflow-hidden">
-        {displayCover && (
-          <Image
-            src={displayCover}
-            width={100}
-            height={100}
-            alt={`cover art for ${title}`}
-          />
-        )}
+        <Image
+          src="/vinyl.png"
+          width={100}
+          height={100}
+          alt={`cover art for ${title}`}
+        />
       </div>
     </div>
   );
@@ -53,7 +47,7 @@ const SongDescriptionCard = ({
 export const SongDisplay = ({ song }: { song: DisplaySong }) => {
   return (
     <div className="flex flex-row w-full justify-between">
-      <SongVinyl title={song.title} displayCover={song.displayCover} />
+      <SongVinyl title={song.title} />
       <SongDescriptionCard
         title={song.title}
         artist={song.artist}
@@ -67,20 +61,44 @@ export const InputSong = ({ song }: { song: Song }) => {
   return (
     <div className="flex justify-between">
       <div className="rounded-full border bg-black bg-opacity-50 flex p-2 mx-2 justify-between w-fit gap-20">
-        {song.cover && (
-          <div className="rounded-full min-w-[80px] border drop-shadow-vinyl overflow-hidden">
-            <Image
-              src={song.cover}
-              width={80}
-              height={80}
-              alt={`cover art for ${song.title}`}
-            />
-          </div>
-        )}
-        <div className="mr-6 max-w-[22vw]">
+        <div className="rounded-full min-w-[80px] border drop-shadow-vinyl overflow-hidden">
+          <Image
+            src="/vinyl.png"
+            width={80}
+            height={80}
+            alt={`cover art for ${song.title}`}
+          />
+        </div>
+        <div className="mr-6 w-[22vw]">
           <SongDescriptionCard title={song.title} artist={song.artist} />
         </div>
       </div>
+    </div>
+  );
+};
+
+export const InputSongDisplay = ({
+  song,
+  href,
+  chooseSong,
+}: {
+  song: Song;
+  href: string;
+  chooseSong: any;
+}) => {
+  return (
+    <div className="flex flex-col gap-2">
+      <InputSong song={song} />
+      <Link
+        className="flex justify-end mr-2"
+        href={href}
+        onClick={() => chooseSong(song)}
+      >
+        <InputLabel
+          name="→"
+          className="text-2xl bg-opacity-0 hover:bg-opacity-50 hover:drop-shadow-vinyl"
+        />
+      </Link>
     </div>
   );
 };
