@@ -16,10 +16,8 @@ export interface Song {
   title: string;
   artist: string;
   playURL?: string;
-  cover: string | null;
 }
 
 export interface DisplaySong extends Song {
-  displayCover: string | null;
   story: string;
 }

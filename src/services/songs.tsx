@@ -37,7 +37,6 @@ export const getSong = async ({ trackId, setError }: getSongProps) => {
         artist: songResponse.artists[0].name,
         playURL: songResponse.external_urls.spotify,
         id: songResponse.id,
-        cover: "/vinyl.png",
       };
 
       return song;
