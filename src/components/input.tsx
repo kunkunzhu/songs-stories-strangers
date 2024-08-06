@@ -1,71 +1,141 @@
 /** @format */
 "use client";
 
-import useFormStore from "@/store/form";
+import useFormStore from "@/store/song";
 import { usePathname, useRouter } from "next/navigation";
-import { startTransition, useState } from "react";
+import { useState } from "react";
 import { FormEvent } from "react";
 import { getSong } from "@/services/songs";
 import { Song } from "@/types";
-import { InputSong } from "./vinyl";
+import { InputSongDisplay } from "./vinyl";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
+import useSongStore from "@/store/song";
 
 interface InputProps {
   name: string;
+  placeholder: string;
+  onChange: any;
+  className?: string;
 }
 
-export const TitleInput = ({ name }: InputProps) => {
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
-  const pathname = usePathname();
-  const router = useRouter();
-
+export const TitleInput = ({
+  name,
+  placeholder,
+  onChange,
+  className,
+}: InputProps) => {
   return (
     <input
       type="text"
       name={name}
-      placeholder="paste track ID here"
-      onChange={(e) => {
-        clearTimeout(timeoutId);
-        let id = setTimeout(() => {
-          startTransition(() => {
-            let searchParams = e.target.value && `?search=${e.target.value}`;
-            if (searchParams) {
-              router.push(`${pathname}${searchParams}`);
-            }
-          });
-        }, 500);
-        setTimeoutId(id);
-      }}
-      className="border rounded-full py-2 px-4 bg-white text-black w-4/5"
+      placeholder={placeholder}
+      onChange={onChange}
+      className={cn(
+        "border rounded-full py-2 px-4 bg-white text-black w-4/5",
+        className
+      )}
     />
   );
 };
 
-export const TextInput = () => {
-  const { inputText, setInputText } = useFormStore();
+export const SearchTitleInput = ({
+  name,
+  placeholder,
+}: {
+  name: string;
+  placeholder: string;
+}) => {
+  // const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
+  // const pathname = usePathname();
+  // const router = useRouter();
+
+  const onSearch = (e: React.FormEvent<HTMLInputElement>) => {
+    // clearTimeout(timeoutId);
+    // let id = setTimeout(() => {
+    //   startTransition(() => {
+    //     let searchParams =
+    //       e.currentTarget.value && `?search=${e.currentTarget.value}`;
+    //     if (searchParams) {
+    //       router.push(`${pathname}${searchParams}`);
+    //     }
+    //   });
+    // }, 500);
+    // setTimeoutId(id);
+  };
 
   return (
+    <TitleInput name={name} placeholder={placeholder} onChange={onSearch} />
+  );
+};
+
+export const InputLabel = ({
+  name,
+  className,
+}: {
+  name: string;
+  className?: string;
+}) => {
+  return (
+    <div
+      className={cn(
+        "w-1/5 flex bg-black font-mono text-xs bg-opacity-50 border justify-center items-center rounded-full",
+        className
+      )}
+    >
+      {name}
+    </div>
+  );
+};
+
+export const ButtonLabel = ({
+  name,
+  className,
+}: {
+  name: string;
+  className?: string;
+}) => {
+  return (
+    <button
+      type="submit"
+      className={cn("w-1/5 border rounded-full hover:bg-black", className)}
+    >
+      {name}
+    </button>
+  );
+};
+
+export const TextInput = ({
+  onChange,
+  placeholder,
+}: {
+  onChange: any;
+  placeholder: string;
+}) => {
+  return (
     <textarea
-      placeholder={inputText}
-      onChange={(e) => {
-        setInputText(e.target.value);
-      }}
-      className="border h-3/4 overflow-scroll resize-none w-full bg-white text-black py-2 px-4 text-xs rounded-lg"
+      placeholder={placeholder}
+      className="border h-3/4 overflow-scroll resize-none w-full bg-white text-black py-2 px-4 text-sm rounded-lg"
+      onChange={onChange}
     />
   );
 };
 
 export const SearchInputDisplay = () => {
-  const [song, setSong] = useState<Song | undefined>(undefined);
+  // TO DO: get song search functionality working
+
+  const [tempSong, setTempSong] = useState<Song | undefined>(undefined);
   const [error, setError] = useState(false);
+  const { chooseSong } = useSongStore();
 
   async function searchSong(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    setError(false);
     const formData = new FormData(event.currentTarget);
     const trackId = formData.get("song") as string;
     const response = await getSong({ trackId, setError });
-    setSong(response);
-    setError(false);
+    setTempSong(response);
   }
 
   return (
@@ -75,10 +145,8 @@ export const SearchInputDisplay = () => {
         name="song"
         className="flex justify-between gap-2"
       >
-        <TitleInput name="song" />
-        <button className="w-1/5 border rounded-full hover:bg-black">
-          submit
-        </button>
+        <SearchTitleInput name="song" placeholder="paste track ID here" />
+        <ButtonLabel name="submit" />
       </form>
       <div className="py-2">
         {error && (
@@ -86,8 +154,12 @@ export const SearchInputDisplay = () => {
             no song with this track ID is found (⋟﹏⋞) ...
           </span>
         )}
-        {song ? (
-          <InputSong song={song} />
+        {tempSong ? (
+          <InputSongDisplay
+            song={tempSong}
+            href="/send/step-two"
+            chooseSong={() => chooseSong(tempSong)}
+          />
         ) : (
           <div className="flex justify-end text-xs opacity-50">
             can't find the song you are looking for?&nbsp;

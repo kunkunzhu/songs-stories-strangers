@@ -1,14 +1,27 @@
 /** @format */
-import Card from "@/components/card";
-import Spark from "@/components/spark";
+"use client";
 
-export default function SendViewStepTwo() {
+import { SongForm } from "@/components/form";
+import { useState } from "react";
+import { Song } from "@/types";
+import { InputSongDisplay } from "@/components/vinyl";
+import useSongStore from "@/store/song";
+
+export default function SendViewAltStepOne() {
+  const [tempSong, setTempSong] = useState<Song | undefined>(undefined);
+  const { chooseSong } = useSongStore();
+
   return (
     <>
-      <Card className="flex flex-col gap-4">alt</Card>
-      <div className="flex justify-center -mb-20 mt-20">
-        <Spark href="/receive" />
-      </div>
+      {tempSong ? (
+        <InputSongDisplay
+          song={tempSong}
+          href="/send/step-two"
+          chooseSong={chooseSong}
+        />
+      ) : (
+        <SongForm setSong={setTempSong} />
+      )}
     </>
   );
 }
