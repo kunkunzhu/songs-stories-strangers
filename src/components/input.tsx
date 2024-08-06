@@ -162,7 +162,7 @@ export const SearchInputDisplay = () => {
           />
         ) : (
           <div className="flex justify-end text-xs opacity-50">
-            can't find the song you are looking for?&nbsp;
+            can&apos;t find the song you are looking for?&nbsp;
             <Link
               className="rounded-full border hover:bg-black px-2"
               href="/send/step-one/alt"
