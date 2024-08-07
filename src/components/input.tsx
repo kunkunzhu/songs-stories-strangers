@@ -1,8 +1,6 @@
 /** @format */
 "use client";
 
-import useFormStore from "@/store/song";
-import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { FormEvent } from "react";
 import { getSong } from "@/services/songs";
@@ -108,14 +106,23 @@ export const ButtonLabel = ({
 export const TextInput = ({
   onChange,
   placeholder,
+  className = "",
+  error = false,
 }: {
   onChange: any;
   placeholder: string;
+  className?: string;
+  error?: boolean;
 }) => {
   return (
     <textarea
       placeholder={placeholder}
-      className="border h-3/4 overflow-scroll resize-none w-full bg-white text-black py-2 px-4 text-sm rounded-lg"
+      className={cn(
+        "border h-full overflow-scroll resize-none w-full bg-white text-black py-2 px-4 text-sm rounded-lg",
+        error && "placeholder-red-500",
+        error && "border-red-500",
+        className
+      )}
       onChange={onChange}
     />
   );
