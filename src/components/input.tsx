@@ -9,6 +9,8 @@ import { InputSongDisplay } from "./vinyl";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import useSongStore from "@/store/song";
+import Modal from "./modal";
+import Image from "next/image";
 
 interface InputProps {
   name: string;
@@ -132,7 +134,8 @@ export const SearchInputDisplay = () => {
   // TO DO: get song search functionality working
 
   const [tempSong, setTempSong] = useState<Song | undefined>(undefined);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<boolean>(false);
+  const [tutorial, showTutorial] = useState<boolean>(true);
   const { chooseSong } = useSongStore();
 
   async function searchSong(event: FormEvent<HTMLFormElement>) {
@@ -141,19 +144,33 @@ export const SearchInputDisplay = () => {
     setError(false);
     const formData = new FormData(event.currentTarget);
     const trackId = formData.get("song") as string;
-    const response = await getSong({ trackId, setError });
-    setTempSong(response);
+    if (!trackId) {
+      setError(true);
+    } else {
+      const response = await getSong({ trackId, setError });
+      setTempSong(response);
+    }
   }
 
   return (
     <>
+      {tutorial && (
+        <Modal onClose={() => showTutorial(false)} title="track ID tutorial">
+          <Image
+            src="/trackID_tut.png"
+            width={300}
+            height={400}
+            alt="tutorial"
+          />
+        </Modal>
+      )}
       <form
         onSubmit={searchSong}
         name="song"
         className="flex justify-between gap-2"
       >
         <SearchTitleInput name="song" placeholder="paste track ID here" />
-        <ButtonLabel name="submit" />
+        <ButtonLabel name="submit" className="bg-white bg-opacity-10" />
       </form>
       <div className="py-2">
         {error && (
@@ -161,21 +178,33 @@ export const SearchInputDisplay = () => {
             no song with this track ID is found (⋟﹏⋞) ...
           </span>
         )}
-        {tempSong ? (
+        {tempSong && !error ? (
           <InputSongDisplay
             song={tempSong}
-            href="/send/step-two"
+            href="/send/step-two/write"
             chooseSong={() => chooseSong(tempSong)}
           />
         ) : (
-          <div className="flex justify-end text-xs opacity-50">
-            can&apos;t find the song you are looking for?&nbsp;
-            <Link
-              className="rounded-full border hover:bg-black px-2"
-              href="/send/step-one/alt"
-            >
-              add it manually
-            </Link>
+          <div className="flex justify-between  text-xs opacity-50">
+            <div>
+              don&apos;t know how to find the track ID?{" "}
+              <span
+                className="rounded-full border hover:bg-black px-2"
+                onClick={() => showTutorial(true)}
+              >
+                read tutorial
+              </span>
+            </div>
+
+            <div>
+              can&apos;t find the song you are looking for?&nbsp;
+              <Link
+                className="rounded-full border hover:bg-black px-2"
+                href="/send/step-one/alt"
+              >
+                add it manually
+              </Link>
+            </div>
           </div>
         )}
       </div>
