@@ -16,7 +16,7 @@ export default function SendViewAltStepOne() {
       {tempSong ? (
         <InputSongDisplay
           song={tempSong}
-          href="/send/step-two"
+          href="/send/step-two/write"
           chooseSong={chooseSong}
         />
       ) : (

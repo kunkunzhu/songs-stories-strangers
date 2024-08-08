@@ -13,15 +13,12 @@ export default function RootLayout({
     <>
       <Card className="flex flex-col justify-between">
         <div className="flex flex-col gap-4 h-full">
-          <TapeLabel
-            index={1}
-            text="what is a song that is meaningful to you?"
-          />
+          <TapeLabel index={2} text="what is the story behind it?" />
           {children}
         </div>
       </Card>
       <div className="flex justify-center -mb-20 mt-20">
-        <Spark href="/send/step-two/write" />
+        <Spark href="/receive" />
       </div>
     </>
   );
