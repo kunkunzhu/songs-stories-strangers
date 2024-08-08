@@ -18,7 +18,7 @@ export default function RootLayout({
         </div>
       </Card>
       <div className="flex justify-center -mb-20 mt-20">
-        <Spark href="/receive" />
+        {/* <Spark href="/receive" /> */}
       </div>
     </>
   );
