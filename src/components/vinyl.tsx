@@ -4,6 +4,7 @@ import Image from "next/image";
 import { DisplaySong, Song } from "@/types";
 import { InputLabel } from "./input";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 const SongVinyl = ({ title }: { title: string }) => {
   return (
@@ -16,6 +17,45 @@ const SongVinyl = ({ title }: { title: string }) => {
           alt={`cover art for ${title}`}
         />
       </div>
+    </div>
+  );
+};
+
+export const StoryCard = ({
+  story,
+  className = "",
+}: {
+  story: string;
+  className?: string;
+}) => {
+  return (
+    <div
+      className={cn(
+        "border h-full rounded-lg py-2 px-4 text-xs mt-8 overflow-y-scroll bg-white bg-opacity-20",
+        className
+      )}
+    >
+      {story}
+    </div>
+  );
+};
+
+export const SongPreviewCard = ({
+  title,
+  artist,
+  story,
+}: {
+  title: string;
+  artist: string;
+  story?: string;
+}) => {
+  return (
+    <div className="flex flex-col border rounded-lg bg-white bg-opacity-20">
+      <div className="flex flex-col font-mono text-end">
+        <div className="text-2xl max-w-100 truncate text-green-50">{title}</div>
+        <div className="text-sm opacity-75 after:italic">{artist}</div>
+      </div>
+      {story && <StoryCard story={story} className="max-w-[300px]" />}
     </div>
   );
 };
@@ -35,11 +75,7 @@ const SongDescriptionCard = ({
         <div className="text-2xl max-w-100 truncate text-green-50">{title}</div>
         <div className="text-sm opacity-75 after:italic">{artist}</div>
       </div>
-      {story && (
-        <div className="border h-full rounded-lg py-2 px-4 text-xs mt-8 overflow-y-scroll bg-white bg-opacity-20 max-w-[300px]">
-          {story}
-        </div>
-      )}
+      {story && <StoryCard story={story} className="max-w-[300px]" />}
     </div>
   );
 };
@@ -57,23 +93,77 @@ export const SongDisplay = ({ song }: { song: DisplaySong }) => {
   );
 };
 
-export const InputSong = ({ song }: { song: Song }) => {
+export const InputSongBase = ({
+  song,
+  imageNode,
+  className = "",
+}: {
+  song: Song;
+  imageNode: React.ReactNode;
+  className?: string;
+}) => {
   return (
-    <div className="flex justify-between">
-      <div className="rounded-full border bg-black bg-opacity-50 flex p-2 mx-2 justify-between w-fit gap-20">
-        <div className="rounded-full min-w-[80px] border drop-shadow-vinyl overflow-hidden">
-          <Image
-            src="/vinyl.png"
-            width={80}
-            height={80}
-            alt={`cover art for ${song.title}`}
-          />
-        </div>
-        <div className="mr-6 w-[22vw]">
-          <SongDescriptionCard title={song.title} artist={song.artist} />
-        </div>
+    <div
+      className={cn(
+        "rounded-full border bg-black bg-opacity-50 flex p-2 mx-2 justify-between w-fit gap-20",
+        className
+      )}
+    >
+      {imageNode}
+      <div className="mr-8 mt-2 w-[22vw]">
+        <SongDescriptionCard title={song.title} artist={song.artist} />
       </div>
     </div>
+  );
+};
+
+export const InputSong = ({
+  song,
+  className = "",
+}: {
+  song: Song;
+  className?: string;
+}) => {
+  const imageNode = (
+    <div className="rounded-full min-w-[80px] border drop-shadow-vinyl overflow-hidden">
+      <Image
+        src="/vinyl.png"
+        width={80}
+        height={80}
+        alt={`cover art for ${song.title}`}
+      />
+    </div>
+  );
+
+  return (
+    <InputSongBase song={song} imageNode={imageNode} className={className} />
+  );
+};
+
+export const InputSongSend = ({
+  song,
+  className = "",
+  onClick,
+}: {
+  song: Song;
+  className?: string;
+  onClick: any;
+}) => {
+  const imageNode = (
+    <div
+      className="ml-4 h-fit hover:scale-110 hover:drop-shadow-letter transition-all"
+      onClick={onClick}
+    >
+      <Image
+        src="/letter.png"
+        width={150}
+        height={75}
+        alt={`cover art for ${song.title}`}
+      />
+    </div>
+  );
+  return (
+    <InputSongBase song={song} imageNode={imageNode} className={className} />
   );
 };
 
