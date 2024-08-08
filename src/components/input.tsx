@@ -135,7 +135,7 @@ export const SearchInputDisplay = () => {
 
   const [tempSong, setTempSong] = useState<Song | undefined>(undefined);
   const [error, setError] = useState<boolean>(false);
-  const [tutorial, showTutorial] = useState<boolean>(true);
+  const [tutorial, showTutorial] = useState<boolean>(false);
   const { chooseSong } = useSongStore();
 
   async function searchSong(event: FormEvent<HTMLFormElement>) {
