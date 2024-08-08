@@ -1,13 +1,15 @@
 /** @format */
 
-export const sampleSong = {
-  id: "3dUipZ8OPRaWetU85XsvDI",
+import { DisplaySong, Song } from "@/types";
+
+export const sampleSong: Song = {
+  songId: "3dUipZ8OPRaWetU85XsvDI",
   title: "xx",
   artist: "The Millennial Club",
 };
 
-export const sampleDisplaySong = {
-  id: "2IpGJch14myWAYb96GBwP3",
+export const sampleDisplaySong: DisplaySong = {
+  songId: "2IpGJch14myWAYb96GBwP3",
   title: "vampires",
   artist: "Tommy Lefroy",
   story:

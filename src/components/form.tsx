@@ -24,7 +24,7 @@ export const SongForm = ({ setSong }: { setSong: any }) => {
       setError(true);
     } else {
       const song: Song = {
-        id: randomId,
+        songId: randomId,
         title: title,
         artist: artist,
         playURL: link,

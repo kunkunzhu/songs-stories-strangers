@@ -8,6 +8,11 @@ interface getSongProps {
   setError: any;
 }
 
+interface sendSongProps {
+  song: Song;
+  story: string;
+}
+
 export const getSong = async ({ trackId, setError }: getSongProps) => {
   const authToken = await getAuth();
 
@@ -36,7 +41,7 @@ export const getSong = async ({ trackId, setError }: getSongProps) => {
         title: songResponse.name,
         artist: songResponse.artists[0].name,
         playURL: songResponse.external_urls.spotify,
-        id: songResponse.id,
+        songId: songResponse.id,
       };
 
       return song;
@@ -44,5 +49,40 @@ export const getSong = async ({ trackId, setError }: getSongProps) => {
       console.log("Error fetching song:", e);
       return undefined;
     }
+  }
+};
+
+export const sendSong = async ({ song, story }: sendSongProps) => {
+  fetch("/api/add-song", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      songId: song.songId,
+      title: song.title,
+      artist: song.artist,
+      playURL: song.playURL,
+      story: story,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch((error) => console.error("Error:", error));
+};
+
+export const receiveSong = async () => {
+  try {
+    const response = await fetch("/api/receive-song");
+    const data = await response.json();
+    if (response.ok) {
+      return data.song;
+    } else {
+      console.error(data.error);
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching random song:", error);
+    return null;
   }
 };

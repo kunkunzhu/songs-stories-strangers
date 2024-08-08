@@ -7,12 +7,17 @@ export type ComponentPropsType = {
   children: ReactNode;
 };
 
+export interface ModalPropsType extends ComponentPropsType {
+  onClose: any;
+  title: string;
+}
+
 export type SearchParamsType = {
   [key: string]: string | string[] | undefined;
 };
 
 export interface Song {
-  id: string;
+  songId: string;
   title: string;
   artist: string;
   playURL?: string;
