@@ -28,7 +28,7 @@ export default function SendViewStepTwoSend() {
       story: story,
     };
     sendSong(songToSend);
-    router.push("/receive");
+    router.push("/send/complete");
   };
 
   return (
@@ -45,11 +45,11 @@ export default function SendViewStepTwoSend() {
         onClick={() => showStoryModal(!storyModal)}
       />
 
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-col gap-2 md:gap-0 md:flex-row justify-between">
         <Link href="/send/step-two/write" className="h-full flex w-full">
           <InputLabel
             name="← edit"
-            className="text-xl py-1 pr-10 uppercase w-1/2 justify-end bg-opacity-20 hover:bg-opacity-50 hover:drop-shadow-letter"
+            className="text-xl py-1 pr-10 uppercase w-full md:w-1/2 md:justify-end bg-opacity-20 hover:bg-opacity-50 hover:drop-shadow-letter"
           />
         </Link>
         <div

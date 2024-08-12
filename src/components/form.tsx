@@ -37,7 +37,7 @@ export const SongForm = ({ setSong }: { setSong: any }) => {
   return (
     <form name="song" className="flex flex-col gap-4" onSubmit={submitSong}>
       <div className="flex justify-between gap-4">
-        <InputLabel name="title" />
+        <InputLabel name="title" className="hidden md:block" />
         <TitleInput
           name="title"
           placeholder="what is the song called?"
@@ -48,7 +48,7 @@ export const SongForm = ({ setSong }: { setSong: any }) => {
       </div>
       {title && artistDisplay ? (
         <div className="flex justify-between gap-4">
-          <InputLabel name="artist" />
+          <InputLabel name="artist" className="hidden md:block" />
           <TitleInput
             name="artist"
             placeholder="who created this song?"
@@ -73,10 +73,10 @@ export const SongForm = ({ setSong }: { setSong: any }) => {
         <>
           {linkDisplay ? (
             <div className="flex justify-between gap-4">
-              <InputLabel name="link" />
+              <InputLabel name="link" className="hidden md:block" />
               <TitleInput
                 name="link"
-                placeholder="where can this song be found?"
+                placeholder="attack a link to the song"
                 onChange={(e: React.FormEvent<HTMLInputElement>) =>
                   setLink(e.currentTarget.value)
                 }
@@ -102,7 +102,7 @@ export const SongForm = ({ setSong }: { setSong: any }) => {
           )}
           <ButtonLabel
             name="submit"
-            className="bg-opacity-25 font-mono text-xs p-2 bg-black"
+            className="bg-opacity-25 font-mono md:text-xs p-2 bg-black"
           />
         </div>
       )}

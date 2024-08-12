@@ -27,12 +27,17 @@ const TapeReelCircles = ({
   );
 };
 
-export const TapeReels = () => {
+export const TapeReels = ({ className = "" }: { className?: string }) => {
   return (
-    <div className="border rounded-full bg-black bg-opacity-50 mx-auto h-fit w-2/3 flex flex-col justify-center p-5">
+    <div
+      className={cn(
+        "border rounded-full bg-black bg-opacity-50 mx-auto h-fit w-full md:w-2/3 flex flex-col justify-center p-2 md:p-5",
+        className
+      )}
+    >
       <div className="flex flex-row justify-between">
-        <TapeReelCircles className="size-20" />
-        <TapeReelCircles className="size-20" />
+        <TapeReelCircles className="size-8 md:size-20" />
+        <TapeReelCircles className="size-8 md:size-20" />
       </div>
     </div>
   );
@@ -43,7 +48,7 @@ export const TapeLink = ({ href, text, className }: TapeLinkPropsType) => {
     <Link
       href={href}
       className={cn(
-        "flex border w-1/2 h-fit px-5 py-4 font-mono tracking-wider bg-black bg-opacity-20 text-lg hover:bg-opacity-50",
+        "flex border w-full md:w-1/2 h-fit px-5 py-2 md:py-4 font-mono tracking-wider bg-black bg-opacity-20 text-2xl md:text-lg hover:bg-opacity-50",
         className
       )}
     >
@@ -54,8 +59,8 @@ export const TapeLink = ({ href, text, className }: TapeLinkPropsType) => {
 
 export const TapeLabel = ({ index, text }: { index: number; text: string }) => {
   return (
-    <div className="border rounded-full items-center flex justify-between p-2 pr-8 bg-black bg-opacity-20 ">
-      <TapeReelCircles text={index.toString()} className="size-10" />
+    <div className="border text-sm md:text-base rounded-lg md:rounded-full items-center flex flex-col md:flex-row justify-between px-4 py-2 md:px-2 md:pr-8 bg-black bg-opacity-20 ">
+      <TapeReelCircles text={index.toString()} className="size-5 md:size-10" />
       <div className="font-mono">{text}</div>
     </div>
   );

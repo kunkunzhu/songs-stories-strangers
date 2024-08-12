@@ -71,8 +71,10 @@ const SongDescriptionCard = ({
 }) => {
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col font-mono justify-between text-end border-b pb-4">
-        <div className="text-2xl max-w-100 truncate text-green-50">{title}</div>
+      <div className="flex flex-col font-mono justify-between text-center md:text-end md:border-b pb-2 md:pb-4">
+        <div className="text-2xl max-w-50 md:max-w-100 truncate text-green-50">
+          {title}
+        </div>
         <div className="text-sm opacity-75 after:italic">{artist}</div>
       </div>
       {story && <StoryCard story={story} className="max-w-[300px]" />}
@@ -105,12 +107,12 @@ export const InputSongBase = ({
   return (
     <div
       className={cn(
-        "rounded-full border bg-black bg-opacity-50 flex p-2 mx-2 justify-between w-fit gap-20",
+        "rounded-full border bg-black bg-opacity-50 flex flex-col md:flex-row p-1 md:p-2 md:mx-2 md:justify-between w-full md:w-fit mx-auto md:gap-20",
         className
       )}
     >
       {imageNode}
-      <div className="mr-8 mt-2 w-[22vw]">
+      <div className="md:mr-8 mt-2 w-full md:w-[22vw]">
         <SongDescriptionCard title={song.title} artist={song.artist} />
       </div>
     </div>
@@ -125,7 +127,7 @@ export const InputSong = ({
   className?: string;
 }) => {
   const imageNode = (
-    <div className="rounded-full min-w-[80px] border drop-shadow-vinyl overflow-hidden">
+    <div className="rounded-full hidden md:block min-w-[80px] border drop-shadow-vinyl overflow-hidden">
       <Image
         src="/vinyl.png"
         width={80}
@@ -151,7 +153,7 @@ export const InputSongSend = ({
 }) => {
   const imageNode = (
     <div
-      className="ml-4 h-fit hover:scale-110 hover:drop-shadow-letter transition-all"
+      className="ml-4 h-fit hidden md:block hover:scale-110 hover:drop-shadow-letter transition-all"
       onClick={onClick}
     >
       <Image
@@ -177,10 +179,10 @@ export const InputSongDisplay = ({
   chooseSong: any;
 }) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-10 md:gap-2">
       <InputSong song={song} />
       <Link
-        className="flex justify-end mr-2"
+        className="flex justify-center md:justify-end md:mr-2"
         href={href}
         onClick={() => chooseSong(song)}
       >

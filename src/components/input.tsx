@@ -32,7 +32,7 @@ export const TitleInput = ({
       placeholder={placeholder}
       onChange={onChange}
       className={cn(
-        "border rounded-full py-2 px-4 bg-white text-black w-4/5",
+        "border rounded-full py-1 md:py-2 px-4 bg-white text-sm md:text-base w-full text-black md:w-4/5",
         className
       )}
     />
@@ -79,7 +79,7 @@ export const InputLabel = ({
   return (
     <div
       className={cn(
-        "w-1/5 flex bg-black font-mono text-xs bg-opacity-50 border justify-center items-center rounded-full",
+        "w-1/2 md:w-1/5 flex bg-black font-mono text-xs bg-opacity-50 border justify-center items-center rounded-full",
         className
       )}
     >
@@ -98,7 +98,10 @@ export const ButtonLabel = ({
   return (
     <button
       type="submit"
-      className={cn("w-1/5 border rounded-full hover:bg-black", className)}
+      className={cn(
+        "w-1/2 md:w-1/5 border mx-auto md:mx-0 text-xl md:text-base rounded-full hover:bg-black",
+        className
+      )}
     >
       {name}
     </button>
@@ -156,25 +159,27 @@ export const SearchInputDisplay = () => {
     <>
       {tutorial && (
         <Modal onClose={() => showTutorial(false)} title="track ID tutorial">
-          <Image
-            src="/trackID_tut.png"
-            width={300}
-            height={400}
-            alt="tutorial"
-          />
+          <Link href="https://bit.ly/4djAOy3" target="_blank">
+            <Image
+              src="/trackID_tut.png"
+              width={300}
+              height={400}
+              alt="tutorial"
+            />
+          </Link>
         </Modal>
       )}
       <form
         onSubmit={searchSong}
         name="song"
-        className="flex justify-between gap-2"
+        className="flex flex-col md:flex-row justify-between gap-2"
       >
         <SearchTitleInput name="song" placeholder="paste track ID here" />
         <ButtonLabel name="submit" className="bg-white bg-opacity-10" />
       </form>
       <div className="py-2">
         {error && (
-          <span className="px-12 opacity-75 text-xl">
+          <span className="px-12 opacity-75 md:text-xl">
             no song with this track ID is found (⋟﹏⋞) ...
           </span>
         )}
@@ -185,7 +190,7 @@ export const SearchInputDisplay = () => {
             chooseSong={() => chooseSong(tempSong)}
           />
         ) : (
-          <div className="flex justify-between  text-xs opacity-50">
+          <div className="flex gap-4 flex-col md:flex-row justify-between text-xs opacity-50">
             <div>
               don&apos;t know how to find the track ID?{" "}
               <span
