@@ -49,7 +49,7 @@ export default function SendViewStepTwoWrite() {
               : "→"
           }
           className={cn(
-            "text-2xl h-[40px] bg-opacity-0",
+            "text-2xl h-[40px] bg-opacity-0 min-w-fit",
             error && "text-xs",
             error && "w-full",
             error && "text-red-400",

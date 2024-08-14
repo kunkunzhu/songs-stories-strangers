@@ -20,8 +20,10 @@ const config: Config = {
         mono: ["var(--display-font)"],
       },
       dropShadow: {
+        card: "0 0 150px rgba(255, 255, 255, 0.5)",
         letter: "0 0 10px rgba(255, 255, 255, 0.4)",
         vinyl: "0 0 50px rgba(255, 255, 255, 0.4)",
+        "tape-reel": "0 0 20px rgba(8, 1, 33, 0.7)",
         spark: "0 0 20px rgba(255, 255, 255, 0.6)",
         "spark-hover": "0 0 20px rgba(255, 255, 255, 1)",
       },

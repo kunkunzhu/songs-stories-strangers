@@ -17,7 +17,7 @@ const ReceiveViewTemp = () => {
       <Link href="/send/step-one">
         <InputLabel
           name="send a song"
-          className="uppercase text-xl w-fit px-6 py-2 hover:drop-shadow-spark"
+          className="uppercase text-xl min-w-fit px-6 py-2 hover:drop-shadow-spark"
         />
       </Link>
     </div>

@@ -188,7 +188,7 @@ export const InputSongDisplay = ({
       >
         <InputLabel
           name="→"
-          className="text-2xl bg-opacity-0 hover:bg-opacity-50 hover:drop-shadow-vinyl"
+          className="text-2xl bg-opacity-0 hover:bg-opacity-50 hover:drop-shadow-vinyl py-1"
         />
       </Link>
     </div>

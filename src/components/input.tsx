@@ -79,7 +79,7 @@ export const InputLabel = ({
   return (
     <div
       className={cn(
-        "w-1/2 md:w-1/5 flex bg-black font-mono text-xs bg-opacity-50 border justify-center items-center rounded-full",
+        "flex flex-col w-1/2 md:w-1/5 bg-black font-mono text-sm bg-opacity-50 border justify-center items-center text-center my-auto p-4 rounded-full",
         className
       )}
     >
@@ -175,7 +175,10 @@ export const SearchInputDisplay = () => {
         className="flex flex-col md:flex-row justify-between gap-2"
       >
         <SearchTitleInput name="song" placeholder="paste track ID here" />
-        <ButtonLabel name="submit" className="bg-white bg-opacity-10" />
+        <ButtonLabel
+          name="submit"
+          className="bg-white bg-opacity-10 drop-shadow-tape-reel"
+        />
       </form>
       <div className="py-2">
         {error && (
