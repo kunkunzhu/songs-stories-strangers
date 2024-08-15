@@ -2,6 +2,7 @@
 
 import Card from "@/components/card";
 import { TapeLink, TapeReels } from "@/components/cassette";
+import Spark from "@/components/spark";
 
 export default function Home() {
   return (
@@ -29,6 +30,9 @@ export default function Home() {
             </div>
           </Card>
         </div>
+      </div>
+      <div className="flex justify-center -mb-20 mt-20">
+        <Spark href="/about" state="start" />
       </div>
     </main>
   );
