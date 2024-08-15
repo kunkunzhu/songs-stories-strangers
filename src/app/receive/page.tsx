@@ -35,7 +35,7 @@ export default function ReceiveView() {
           </div>
         </Card>
         <div className="flex justify-center items-center -mb-20 mt-20">
-          {/* <Spark href="/" /> */}
+          <Spark href="/" />
         </div>
       </div>
     </main>

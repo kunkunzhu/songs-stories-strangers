@@ -12,7 +12,7 @@ export default function SendViewCompleteView() {
             Thank you for sending in your story!
           </div>
           <div className="flex justify-center">
-            <Spark href="/" />
+            <Spark href="/" state="finish" />
           </div>
         </div>
       </Card>

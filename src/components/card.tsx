@@ -49,7 +49,7 @@ const Card = ({ className, children }: ComponentPropsType) => {
           style={{
             background: useMotionTemplate`
         radial-gradient(
-          15px circle at ${mouseX}px ${mouseY}px,
+          20px circle at ${mouseX}px ${mouseY}px,
           rgba(255, 255, 255, 0.2),
           transparent 80%
         )

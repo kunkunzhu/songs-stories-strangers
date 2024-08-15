@@ -2,9 +2,14 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const Spark = ({ href }: { href: string }) => {
+interface SparkI {
+  href: string;
+  state?: "start" | "in-progress" | "finish";
+}
+
+const Spark = ({ href, state = "in-progress" }: SparkI) => {
   return (
-    <Link href={href}>
+    <Link href={href} className="group">
       <Image
         src="/spark.svg"
         alt="spark"
@@ -12,6 +17,20 @@ const Spark = ({ href }: { href: string }) => {
         height={30}
         className="drop-shadow-spark ease-in hover:drop-shadow-spark-hover"
       />
+      {state == "start" ? (
+        <div className="absolute font-mono hidden opacity-75 tracking-widest -mx-12 italic p-2 group-hover:block">
+          what is this?
+        </div>
+      ) : (
+        <div className="absolute font-mono tracking-widest p-2 -mx-20 my-4 text-center hidden group-hover:flex flex-col gap-1">
+          <span className="px-6 opacity-75 uppercase">return to home</span>
+          {state != "finish" && (
+            <span className="text-xs opacity-50 italic">
+              all progress will be lost.
+            </span>
+          )}
+        </div>
+      )}
     </Link>
   );
 };
