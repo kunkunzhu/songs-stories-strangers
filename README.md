@@ -8,4 +8,4 @@ Try the app out [here](https://songs-stories-strangers.vercel.app/)!
 
 ![image](https://github.com/user-attachments/assets/b3821f7e-2e8e-4822-b02c-71992a0ecfbc)
 
-Built with Next.JS, PostgreSQL, Spotify API, Zustand, and the intention to amplify small moments of connection across the vast expanse of the internet 💌
+Built with Next.JS, Tailwind CSS, PostgreSQL, Spotify API, Zustand, and the intention to amplify small moments of connection across the vast expanse of the internet 💌
