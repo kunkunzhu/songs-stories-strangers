@@ -13,6 +13,47 @@ interface sendSongProps {
   story: string;
 }
 
+interface searchSongProps {
+  query: string;
+  // setSong: any,
+  // setLoading: any
+}
+
+export const searchSongs = async ({
+  query,
+}: // setSong,
+// setLoading,
+searchSongProps) => {
+  const authToken = await getAuth();
+  if (authToken) {
+    try {
+      const response = await fetch(
+        "https://api.spotify.com/v1/search/?" +
+          new URLSearchParams({
+            q: query,
+            type: "track",
+          }),
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        console.log("Failed to search song");
+        return undefined;
+      }
+
+      const songsResponse = await response.json();
+      console.log(songsResponse);
+    } catch (e) {
+      console.log("Error searching song:", e);
+      return undefined;
+    }
+  }
+};
+
 export const getSong = async ({ trackId, setError }: getSongProps) => {
   const authToken = await getAuth();
 
