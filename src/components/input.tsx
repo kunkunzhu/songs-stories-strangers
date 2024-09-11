@@ -1,16 +1,21 @@
 /** @format */
 "use client";
 
-import { useState } from "react";
-import { FormEvent } from "react";
-import { getSong } from "@/services/songs";
+import {
+  Suspense,
+  TransitionStartFunction,
+  useState,
+  useTransition,
+} from "react";
 import { Song } from "@/types";
-import { InputSongDisplay } from "./vinyl";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import useSongStore from "@/store/song";
 import Modal from "./modal";
 import Image from "next/image";
+import { BarLoader } from "react-spinners";
+import { useRouter, useSearchParams } from "next/navigation";
+import { SongSearchResultDisplay } from "./songs";
 
 interface InputProps {
   name: string;
@@ -32,7 +37,7 @@ export const TitleInput = ({
       placeholder={placeholder}
       onChange={onChange}
       className={cn(
-        "border rounded-full py-1 md:py-2 px-4 bg-white text-sm md:text-base w-full text-black md:w-4/5",
+        "border rounded-full py-1 md:py-2 px-4 bg-white text-sm md:text-base w-full text-black",
         className
       )}
     />
@@ -42,30 +47,22 @@ export const TitleInput = ({
 export const SearchTitleInput = ({
   name,
   placeholder,
+  startTransition,
 }: {
   name: string;
   placeholder: string;
+  startTransition: TransitionStartFunction;
 }) => {
-  // const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
-  // const pathname = usePathname();
-  // const router = useRouter();
-
+  const router = useRouter();
   const onSearch = (e: React.FormEvent<HTMLInputElement>) => {
-    // clearTimeout(timeoutId);
-    // let id = setTimeout(() => {
-    //   startTransition(() => {
-    //     let searchParams =
-    //       e.currentTarget.value && `?search=${e.currentTarget.value}`;
-    //     if (searchParams) {
-    //       router.push(`${pathname}${searchParams}`);
-    //     }
-    //   });
-    // }, 500);
-    // setTimeoutId(id);
+    startTransition(() => {
+      router.push(`/send/step-one/?query=${e.currentTarget.value}`);
+    });
   };
-
   return (
-    <TitleInput name={name} placeholder={placeholder} onChange={onSearch} />
+    <>
+      <TitleInput name={name} placeholder={placeholder} onChange={onSearch} />
+    </>
   );
 };
 
@@ -133,27 +130,22 @@ export const TextInput = ({
   );
 };
 
+export const LoadingBar = ({ isPending = false }: { isPending?: boolean }) => {
+  return (
+    <div className="flex justify-end">
+      <BarLoader width={300} loading={isPending} />
+    </div>
+  );
+};
+
 export const SearchInputDisplay = () => {
-  // TO DO: get song search functionality working
+  const [isPending, startTransition] = useTransition();
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query");
 
   const [tempSong, setTempSong] = useState<Song | undefined>(undefined);
-  const [error, setError] = useState<boolean>(false);
   const [tutorial, showTutorial] = useState<boolean>(false);
   const { chooseSong } = useSongStore();
-
-  async function searchSong(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    setError(false);
-    const formData = new FormData(event.currentTarget);
-    const trackId = formData.get("song") as string;
-    if (!trackId) {
-      setError(true);
-    } else {
-      const response = await getSong({ trackId, setError });
-      setTempSong(response);
-    }
-  }
 
   return (
     <>
@@ -169,52 +161,25 @@ export const SearchInputDisplay = () => {
           </Link>
         </Modal>
       )}
-      <form
-        onSubmit={searchSong}
+      <SearchTitleInput
         name="song"
-        className="flex flex-col md:flex-row justify-between gap-2"
-      >
-        <SearchTitleInput name="song" placeholder="paste track ID here" />
-        <ButtonLabel
-          name="submit"
-          className="bg-white bg-opacity-10 drop-shadow-tape-reel"
-        />
-      </form>
-      <div className="py-2">
-        {error && (
-          <span className="px-12 opacity-75 md:text-xl">
-            no song with this track ID is found (⋟﹏⋞) ...
-          </span>
-        )}
-        {tempSong && !error ? (
-          <InputSongDisplay
-            song={tempSong}
-            href="/send/step-two/write"
-            chooseSong={() => chooseSong(tempSong)}
-          />
-        ) : (
-          <div className="flex gap-4 flex-col md:flex-row justify-between text-xs opacity-50">
-            <div>
-              don&apos;t know how to find the track ID?{" "}
-              <span
-                className="rounded-full border hover:bg-black px-2"
-                onClick={() => showTutorial(true)}
-              >
-                read tutorial
-              </span>
-            </div>
-
-            <div>
-              can&apos;t find the song you are looking for?&nbsp;
-              <Link
-                className="rounded-full border hover:bg-black px-2"
-                href="/send/step-one/alt"
-              >
-                add it manually
-              </Link>
-            </div>
+        placeholder="Search by track title..."
+        startTransition={startTransition}
+      />
+      <div className="py-2 flex flex-col gap-5">
+        <LoadingBar isPending={isPending} />
+        {query && <SongSearchResultDisplay query={query} />}
+        <div className="flex gap-4 flex-col md:flex-row justify-end text-xs opacity-50">
+          <div>
+            can&apos;t find the song you are looking for?&nbsp;
+            <Link
+              className="rounded-full border hover:bg-black px-2"
+              href="/send/step-one/alt-manual"
+            >
+              add it manually
+            </Link>
           </div>
-        )}
+        </div>
       </div>
     </>
   );
