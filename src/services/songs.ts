@@ -21,10 +21,9 @@ interface searchSongProps {
 
 export const searchSongs = async ({
   query,
-}: // setSong,
-// setLoading,
-searchSongProps) => {
+}: searchSongProps): Promise<Song[] | undefined> => {
   const authToken = await getAuth();
+
   if (authToken) {
     try {
       const response = await fetch(
@@ -32,6 +31,7 @@ searchSongProps) => {
           new URLSearchParams({
             q: query,
             type: "track",
+            limit: "10",
           }),
         {
           headers: {
@@ -41,16 +41,35 @@ searchSongProps) => {
       );
 
       if (!response.ok) {
-        console.log("Failed to search song");
+        console.error("Failed to search song");
         return undefined;
       }
 
       const songsResponse = await response.json();
-      console.log(songsResponse);
+
+      let songs: Song[] = [];
+      songsResponse.tracks.items.map((item: any) => {
+        const song: Song = {
+          songId: item.id,
+          title: item.name,
+          artist: item.artists[0].name,
+          playURL: item.preview_url,
+        };
+
+        songs.push(song);
+      });
+      console.log("PASS");
+
+      return songs;
     } catch (e) {
-      console.log("Error searching song:", e);
+      console.error("Error searching song:", e);
       return undefined;
     }
+  } else {
+    console.error(
+      "API authentication session expired. Please refresh the app."
+    );
+    return undefined;
   }
 };
 
@@ -71,7 +90,7 @@ export const getSong = async ({ trackId, setError }: getSongProps) => {
       );
 
       if (!response.ok) {
-        console.log("Failed to fetch song");
+        console.error("Failed to fetch song");
         setError(true);
         return undefined;
       }
@@ -87,7 +106,7 @@ export const getSong = async ({ trackId, setError }: getSongProps) => {
 
       return song;
     } catch (e) {
-      console.log("Error fetching song:", e);
+      console.error("Error fetching song:", e);
       return undefined;
     }
   }

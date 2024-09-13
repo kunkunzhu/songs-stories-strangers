@@ -4,6 +4,8 @@
 import {
   Suspense,
   TransitionStartFunction,
+  useCallback,
+  useEffect,
   useState,
   useTransition,
 } from "react";
@@ -14,8 +16,8 @@ import useSongStore from "@/store/song";
 import Modal from "./modal";
 import Image from "next/image";
 import { BarLoader } from "react-spinners";
-import { useRouter, useSearchParams } from "next/navigation";
-import { SongSearchResultDisplay } from "./songs";
+import { useRouter } from "next/navigation";
+import { searchSongs } from "@/services/songs";
 
 interface InputProps {
   name: string;
@@ -48,15 +50,17 @@ export const SearchTitleInput = ({
   name,
   placeholder,
   startTransition,
+  setQuery,
 }: {
   name: string;
   placeholder: string;
   startTransition: TransitionStartFunction;
+  setQuery: any;
 }) => {
   const router = useRouter();
   const onSearch = (e: React.FormEvent<HTMLInputElement>) => {
     startTransition(() => {
-      router.push(`/send/step-one/?query=${e.currentTarget.value}`);
+      setQuery(e.currentTarget.value);
     });
   };
   return (
@@ -138,14 +142,43 @@ export const LoadingBar = ({ isPending = false }: { isPending?: boolean }) => {
   );
 };
 
+const SongSearchResult = ({
+  title,
+  artist,
+  key,
+}: {
+  title: string;
+  artist: string;
+  key: number;
+}) => {
+  return (
+    <div
+      key={key}
+      className="flex justify-between w-full px-4 py-2 font-mono bg-black bg-opacity-25 border-b"
+    >
+      <div className="max-w-25 truncate">{title}</div>
+      <div className="opacity-75">{artist}</div>
+    </div>
+  );
+};
+
 export const SearchInputDisplay = () => {
   const [isPending, startTransition] = useTransition();
-  const searchParams = useSearchParams();
-  const query = searchParams.get("query");
 
+  const [query, setQuery] = useState<string>("");
+  const [searchRes, setSearchRes] = useState<Song[] | undefined>(undefined);
   const [tempSong, setTempSong] = useState<Song | undefined>(undefined);
   const [tutorial, showTutorial] = useState<boolean>(false);
   const { chooseSong } = useSongStore();
+
+  const fetchSongs = useCallback(async (query: string) => {
+    const songs = await searchSongs({ query });
+    setSearchRes(songs);
+  }, []);
+
+  useEffect(() => {
+    fetchSongs(query).catch(console.error);
+  }, [query, fetchSongs]);
 
   return (
     <>
@@ -165,11 +198,12 @@ export const SearchInputDisplay = () => {
         name="song"
         placeholder="Search by track title..."
         startTransition={startTransition}
+        setQuery={setQuery}
       />
       <div className="py-2 flex flex-col gap-5">
         <LoadingBar isPending={isPending} />
-        {query && <SongSearchResultDisplay query={query} />}
-        <div className="flex gap-4 flex-col md:flex-row justify-end text-xs opacity-50">
+        {searchRes && <SongsSearchResultDisplay songs={searchRes} />}
+        <div className="flex md:flex-row justify-end text-xs opacity-50">
           <div>
             can&apos;t find the song you are looking for?&nbsp;
             <Link
@@ -182,5 +216,15 @@ export const SearchInputDisplay = () => {
         </div>
       </div>
     </>
+  );
+};
+
+export const SongsSearchResultDisplay = ({ songs }: { songs: Song[] }) => {
+  return (
+    <div className="flex flex-col border rounded-lg overflow-y-scroll -mt-10 max-h-[16vh]">
+      {songs.map((song, index) => (
+        <SongSearchResult title={song.title} artist={song.artist} key={index} />
+      ))}
+    </div>
   );
 };

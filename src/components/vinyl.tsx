@@ -60,7 +60,7 @@ export const SongPreviewCard = ({
   );
 };
 
-const SongDescriptionCard = ({
+export const SongDescriptionCard = ({
   title,
   artist,
   story,
