@@ -57,16 +57,21 @@ export const SearchTitleInput = ({
   startTransition: TransitionStartFunction;
   setQuery: any;
 }) => {
-  const router = useRouter();
-  const onSearch = (e: React.FormEvent<HTMLInputElement>) => {
-    startTransition(() => {
-      setQuery(e.currentTarget.value);
-    });
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
+
+  const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    clearTimeout(timeoutId);
+
+    let id = setTimeout(() => {
+      startTransition(() => {
+        setQuery(e.target.value);
+      });
+    }, 500);
+
+    setTimeoutId(id);
   };
   return (
-    <>
-      <TitleInput name={name} placeholder={placeholder} onChange={onSearch} />
-    </>
+    <TitleInput name={name} placeholder={placeholder} onChange={onSearch} />
   );
 };
 
