@@ -1,12 +1,11 @@
 /** @format */
 "use client";
 
-import { TapeLabel } from "@/components/cassette";
-import { InputLabel, TextInput } from "@/components/input";
 import { cn } from "@/lib/utils";
 import useSongStore from "@/store/song";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { InputLabel, TextInput } from "@/components/input";
 
 export default function SendViewStepTwoWrite() {
   const router = useRouter();

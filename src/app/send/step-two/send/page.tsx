@@ -2,7 +2,6 @@
 
 "use client";
 
-import { InputLabel } from "@/components/input";
 import Modal from "@/components/modal";
 import { InputSongSend } from "@/components/vinyl";
 import { useRouter } from "next/navigation";
@@ -10,6 +9,7 @@ import useSongStore from "@/store/song";
 import Link from "next/link";
 import { useState } from "react";
 import { sendSong } from "@/services/songs";
+import { InputLabel } from "@/components/input";
 
 export default function SendViewStepTwoSend() {
   const router = useRouter();
@@ -58,7 +58,7 @@ export default function SendViewStepTwoSend() {
         >
           <InputLabel
             name="send →"
-            className="text-xl py-1 pr-10 uppercase w-full justify-end bg-opacity-20 hover:bg-opacity-50 hover:drop-shadow-letter"
+            className="text-xl py-1 pr-10 uppercase w-full md:w-1/2 justify-end bg-opacity-20 hover:bg-opacity-50 hover:drop-shadow-letter"
           />
         </div>
       </div>
