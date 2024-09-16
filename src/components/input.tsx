@@ -2,7 +2,6 @@
 "use client";
 
 import {
-  Suspense,
   TransitionStartFunction,
   useCallback,
   useEffect,
@@ -50,17 +49,20 @@ export const SearchTitleInput = ({
   name,
   placeholder,
   startTransition,
+  resetSong,
   setQuery,
 }: {
   name: string;
   placeholder: string;
   startTransition: TransitionStartFunction;
+  resetSong: any;
   setQuery: any;
 }) => {
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     clearTimeout(timeoutId);
+    resetSong();
 
     let id = setTimeout(() => {
       startTransition(() => {
@@ -148,26 +150,31 @@ export const LoadingBar = ({ isPending = false }: { isPending?: boolean }) => {
 };
 
 const SongSearchResult = ({
-  title,
-  artist,
-  key,
+  song,
+  curSong,
+  setSong,
 }: {
-  title: string;
-  artist: string;
-  key: number;
+  song: Song;
+  curSong: Song | undefined;
+  setSong: any;
 }) => {
   return (
     <div
-      key={key}
-      className="flex justify-between w-full px-4 py-2 font-mono bg-black bg-opacity-25 border-b"
+      onClick={() => setSong(song)}
+      className={cn(
+        "flex flex-col md:flex-row justify-between w-full px-4 py-2 font-mono bg-black bg-opacity-40 border-b",
+        curSong == song && "border-2 rounded-lg bg-opacity-75"
+      )}
     >
-      <div className="max-w-25 truncate">{title}</div>
-      <div className="opacity-75">{artist}</div>
+      <div className="max-w-25 truncate text-xs md:text-md">{song.title}</div>
+      <div className="opacity-75 text-xs md:text-md italic">{song.artist}</div>
     </div>
   );
 };
 
 export const SearchInputDisplay = () => {
+  const router = useRouter();
+
   const [isPending, startTransition] = useTransition();
 
   const [query, setQuery] = useState<string>("");
@@ -203,32 +210,68 @@ export const SearchInputDisplay = () => {
         name="song"
         placeholder="Search by track title..."
         startTransition={startTransition}
+        resetSong={() => setTempSong(undefined)}
         setQuery={setQuery}
       />
       <div className="py-2 flex flex-col gap-5">
         <LoadingBar isPending={isPending} />
-        {searchRes && <SongsSearchResultDisplay songs={searchRes} />}
-        <div className="flex md:flex-row justify-end text-xs opacity-50">
-          <div>
-            can&apos;t find the song you are looking for?&nbsp;
-            <Link
-              className="rounded-full border hover:bg-black px-2"
-              href="/send/step-one/alt-manual"
+        {searchRes && (
+          <SongsSearchResultDisplay
+            songs={searchRes}
+            curSong={tempSong}
+            setSong={setTempSong}
+          />
+        )}
+        {tempSong ? (
+          <div className="flex justify-between">
+            <div className="flex my-auto font-mono rounded-full border text-sm md:text-md px-4 py-2 max-w-25 bg-black bg-opacity-40 truncate">
+              {tempSong.title}
+            </div>
+            <div
+              onClick={() => {
+                chooseSong(tempSong);
+                router.push("/send/step-two/write");
+              }}
             >
-              add it manually
-            </Link>
+              <InputLabel
+                name="→"
+                className="text-2xl h-[40px] bg-opacity-0 min-w-fit hover:bg-opacity-50"
+              />
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="flex rl md:flex-row justify-end text-xs opacity-50">
+            <div>
+              can&apos;t find the song you are looking for?&nbsp;
+              <Link
+                className="rounded-full border hover:bg-black px-2"
+                href="/send/step-one/alt-manual"
+              >
+                add it manually
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
 };
 
-export const SongsSearchResultDisplay = ({ songs }: { songs: Song[] }) => {
+export const SongsSearchResultDisplay = ({
+  songs,
+  curSong,
+  setSong,
+}: {
+  songs: Song[];
+  curSong: Song | undefined;
+  setSong: any;
+}) => {
   return (
-    <div className="flex flex-col border rounded-lg overflow-y-scroll -mt-10 max-h-[16vh]">
+    <div className="flex flex-col border rounded-lg overflow-y-scroll -mt-10 max-h-[25vh] md:max-h-[12vh]">
       {songs.map((song, index) => (
-        <SongSearchResult title={song.title} artist={song.artist} key={index} />
+        <div key={index}>
+          <SongSearchResult song={song} curSong={curSong} setSong={setSong} />
+        </div>
       ))}
     </div>
   );
