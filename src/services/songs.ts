@@ -139,7 +139,6 @@ export const receiveSong = async () => {
     }
 
     const data = await response.json();
-    console.log("PASS!!");
     console.log(data);
 
     return data.song;

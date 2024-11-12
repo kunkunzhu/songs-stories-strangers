@@ -5,8 +5,8 @@ export const getAuth = async () => {
   const clientSecret = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET;
 
   try {
-    console.log("ID", clientId);
-    console.log("Secret", clientSecret);
+    // console.log("ID", clientId);
+    // console.log("Secret", clientSecret);
 
     if (!clientId || !clientSecret) {
       console.log("API key or secret unavailable");

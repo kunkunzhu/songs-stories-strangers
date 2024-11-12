@@ -17,6 +17,7 @@ export async function GET() {
     }
 
     const randomIndex = Math.floor(Math.random() * maxIndex) + 1;
+    console.log("index:", randomIndex);
 
     const result = await sql`SELECT * FROM songs WHERE index = ${randomIndex};`;
 
