@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 const SongVinyl = ({ title }: { title: string }) => {
   return (
-    <div className="flex items-center justify-center border border-gray-200/50 rounded-full w-[250px] h-[250px] bg-black">
+    <div className="flex items-center justify-center border border-gray-200/50 rounded-full w-[250px] h-[250px] bg-black hover:vinyl-spin">
       <div className="w-[100px] h-[100px] border border-gray-200/50 drop-shadow-vinyl rounded-full overflow-hidden">
         <Image
           src="/vinyl.png"
@@ -72,9 +72,10 @@ export const SongDescriptionCard = ({
   return (
     <div className="flex flex-col">
       <div className="flex flex-col font-mono justify-between text-center md:text-end md:border-b pb-2 md:pb-4">
-        <div className="text-2xl max-w-50 md:max-w-100 truncate text-green-50">
+        <div className="text-2xl max-w-50 md:max-w-[300px] truncate">
           {title}
         </div>
+
         <div className="text-sm opacity-75 after:italic">{artist}</div>
       </div>
       {story && <StoryCard story={story} className="max-w-[300px]" />}
@@ -85,7 +86,12 @@ export const SongDescriptionCard = ({
 export const SongDisplay = ({ song }: { song: DisplaySong }) => {
   return (
     <div className="flex flex-row w-full justify-between">
-      <SongVinyl title={song.title} />
+      <a target="_blank" href={song.playURL} className="group">
+        <SongVinyl title={song.title} />
+        <div className="hidden group-hover:flex mt-2 w-fit mx-auto text-end transition-all bg-black opacity-20 rounded-full text-xs px-2 py-1">
+          {song.title}
+        </div>
+      </a>
       <SongDescriptionCard
         title={song.title}
         artist={song.artist}

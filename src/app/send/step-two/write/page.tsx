@@ -18,6 +18,7 @@ export default function SendViewStepTwoWrite() {
     <>
       <TextInput
         error={error}
+        className="overflow-x-hidden"
         placeholder="write about why this song is meaningful to you. (25 - 125 words)"
         onChange={(e: React.FormEvent<HTMLInputElement>) => {
           setError(false);
