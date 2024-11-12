@@ -15,8 +15,6 @@ interface sendSongProps {
 
 interface searchSongProps {
   query: string;
-  // setSong: any,
-  // setLoading: any
 }
 
 export const searchSongs = async ({
@@ -58,7 +56,6 @@ export const searchSongs = async ({
 
         songs.push(song);
       });
-      console.log("PASS");
 
       return songs;
     } catch (e) {
@@ -133,14 +130,19 @@ export const sendSong = async ({ song, story }: sendSongProps) => {
 
 export const receiveSong = async () => {
   try {
-    const response = await fetch("/api/receive-song");
-    const data = await response.json();
-    if (response.ok) {
-      return data.song;
-    } else {
-      console.error(data.error);
-      return null;
+    const response = await fetch("/api/receive-song", {
+      method: "GET",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
+
+    const data = await response.json();
+    console.log("PASS!!");
+    console.log(data);
+
+    return data.song;
   } catch (error) {
     console.error("Error fetching random song:", error);
     return null;
