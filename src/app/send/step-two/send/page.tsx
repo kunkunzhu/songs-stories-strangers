@@ -18,7 +18,6 @@ export default function SendViewStepTwoSend() {
   const [storyModal, showStoryModal] = useState<boolean>(false);
 
   if (!song || !story) {
-    // error-handling
     return <div>NO SONG</div>;
   }
 
@@ -48,7 +47,7 @@ export default function SendViewStepTwoSend() {
       <div className="flex flex-col gap-2 md:gap-0 md:flex-row justify-between">
         <Link href="/send/step-two/write" className="h-full flex w-full">
           <InputLabel
-            name="← edit"
+            name="← rewrite"
             className="text-xl py-1 pr-10 uppercase w-full md:w-1/2 md:justify-end bg-opacity-20 hover:bg-opacity-50 hover:drop-shadow-letter"
           />
         </Link>

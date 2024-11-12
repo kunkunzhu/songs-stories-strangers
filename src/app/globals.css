@@ -39,7 +39,7 @@
 
   /* scrollbar */
   ::-webkit-scrollbar {
-    opacity: 0;
+    width: 0;
   }
 }
 
