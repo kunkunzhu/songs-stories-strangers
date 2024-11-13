@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils";
 
 const SongVinyl = ({ title }: { title: string }) => {
   return (
-    <div className="flex items-center justify-center border border-gray-200/50 rounded-full w-[250px] h-[250px] bg-black hover:vinyl-spin">
-      <div className="w-[100px] h-[100px] border border-gray-200/50 drop-shadow-vinyl rounded-full overflow-hidden">
+    <div className="flex mx-auto items-center justify-center border border-gray-200/50 rounded-full w-[175px] h-[175px] md:w-[250px] md:h-[250px] bg-black hover:vinyl-spin">
+      <div className="w-[75px] h-[75px] md:w-[100px] md:h-[100px] border border-gray-200/50 drop-shadow-vinyl rounded-full overflow-hidden">
         <Image
           src="/vinyl.png"
           width={100}
@@ -31,7 +31,7 @@ export const StoryCard = ({
   return (
     <div
       className={cn(
-        "border h-full rounded-lg py-2 px-4 text-xs mt-8 overflow-y-scroll bg-white bg-opacity-20",
+        "border h-full rounded-lg py-2 px-4 text-xs mt-2 md:mt-8 overflow-y-scroll bg-white bg-opacity-20",
         className
       )}
     >
@@ -78,14 +78,16 @@ export const SongDescriptionCard = ({
 
         <div className="text-sm opacity-75 after:italic">{artist}</div>
       </div>
-      {story && <StoryCard story={story} className="max-w-[300px]" />}
+      {story && (
+        <StoryCard story={story} className="max-w-[300px] max-h-[175px]" />
+      )}
     </div>
   );
 };
 
 export const SongDisplay = ({ song }: { song: DisplaySong }) => {
   return (
-    <div className="flex flex-row w-full justify-between">
+    <div className="flex flex-col gap-2 md:gap-0 md:flex-row w-full justify-between">
       <a target="_blank" href={song.playURL} className="group">
         <SongVinyl title={song.title} />
         <div className="hidden group-hover:flex mt-2 w-fit mx-auto text-end transition-all bg-black opacity-20 rounded-full text-xs px-2 py-1">
