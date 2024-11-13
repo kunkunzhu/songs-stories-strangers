@@ -2,11 +2,13 @@
 
 import { DisplaySong } from "@/types";
 import { sql } from "@vercel/postgres";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    console.log("API Called");
+    const seed = request.nextUrl.searchParams.get("seed");
+    const random = seed ? parseFloat(seed) : Math.random();
+
     const maxIndexResult = await sql`SELECT MAX(index) FROM songs;`;
     const maxIndex = maxIndexResult.rows[0].max;
 
@@ -17,7 +19,7 @@ export async function GET() {
       );
     }
 
-    const randomIndex = Math.floor(Math.random() * maxIndex) + 1;
+    const randomIndex = Math.floor(random * maxIndex) + 1;
     console.log("index:", randomIndex);
 
     const result = await sql`SELECT * FROM songs WHERE index = ${randomIndex};`;

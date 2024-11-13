@@ -32,9 +32,9 @@ const ReceiveViewTemp = () => {
 };
 
 export default function ReceiveView() {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
-  const [song, setSong] = useState<DisplaySong>(sampleDisplaySong);
+  const [song, setSong] = useState<DisplaySong | null>(null);
 
   useEffect(() => {
     const receiveSongFromDatabase = async () => {
@@ -62,7 +62,7 @@ export default function ReceiveView() {
             <div className="m-auto flex">
               <BarLoader width={400} height={2} loading={loading} />
             </div>
-            {!error && !loading && <SongDisplay song={song} />}
+            {!error && !loading && song && <SongDisplay song={song} />}
           </div>
         </Card>
         <div className="flex justify-center items-center -mb-20 mt-20">

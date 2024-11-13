@@ -130,7 +130,9 @@ export const sendSong = async ({ song, story }: sendSongProps) => {
 
 export const receiveSong = async () => {
   try {
-    const response = await fetch("/api/receive-song", {
+    const seed = Math.random();
+    console.log("SEED", seed);
+    const response = await fetch(`/api/receive-song?seed=${seed}`, {
       method: "GET",
     });
 
