@@ -11,7 +11,6 @@ import Link from "next/link";
 import { BarLoader } from "react-spinners";
 import { useEffect, useState } from "react";
 import { TapeLink } from "@/components/cassette";
-import { usePathname } from "next/navigation";
 
 const ReceiveViewTemp = () => {
   return (
@@ -35,8 +34,6 @@ export default function ReceiveView() {
   const [error, setError] = useState<boolean>(false);
   const [song, setSong] = useState<DisplaySong>(sampleDisplaySong);
 
-  const pathname = usePathname();
-
   useEffect(() => {
     const receiveSongFromDatabase = async () => {
       setLoading(true);
@@ -53,7 +50,7 @@ export default function ReceiveView() {
       }
     };
     receiveSongFromDatabase();
-  }, [pathname]);
+  }, []);
 
   return (
     <main>

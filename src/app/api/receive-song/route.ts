@@ -30,7 +30,10 @@ export async function GET() {
       story: songRes.story,
     };
 
-    return NextResponse.json({ song: song }, { status: 200 });
+    const response = NextResponse.json({ song: song }, { status: 200 });
+    response.headers.set("Cache-Control", "no-store, max-age=0");
+
+    return response;
   } catch (error) {
     return NextResponse.json({ error: error }, { status: 500 });
   }
