@@ -6,6 +6,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
+    console.log("API Called");
     const maxIndexResult = await sql`SELECT MAX(index) FROM songs;`;
     const maxIndex = maxIndexResult.rows[0].max;
 
@@ -31,7 +32,7 @@ export async function GET() {
     };
 
     const response = NextResponse.json({ song: song }, { status: 200 });
-    response.headers.set("Cache-Control", "no-store, max-age=0");
+    // response.headers.set("Cache-Control", "no-store, max-age=0");
 
     return response;
   } catch (error) {
