@@ -12,6 +12,8 @@ import { BarLoader } from "react-spinners";
 import { useEffect, useState } from "react";
 import { TapeLink } from "@/components/cassette";
 
+export const dynamic = "force-dynamic";
+
 const ReceiveViewTemp = () => {
   return (
     <div className="flex flex-col gap-4 text-xl mx-auto my-auto align-middle text-left">

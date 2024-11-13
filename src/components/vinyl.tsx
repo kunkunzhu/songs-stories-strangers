@@ -88,12 +88,22 @@ export const SongDescriptionCard = ({
 export const SongDisplay = ({ song }: { song: DisplaySong }) => {
   return (
     <div className="flex flex-col gap-2 md:gap-0 md:flex-row w-full justify-between">
-      <a target="_blank" href={song.playURL} className="group">
-        <SongVinyl title={song.title} />
-        <div className="hidden group-hover:flex mt-2 w-fit mx-auto text-end transition-all bg-black opacity-20 rounded-full text-xs px-2 py-1">
-          {song.title}
+      {song.playURL ? (
+        <a target="_blank" href={song.playURL} className="group">
+          <SongVinyl title={song.title} />
+          <div className="hidden group-hover:flex mt-2 w-fit mx-auto text-end transition-all bg-black opacity-20 rounded-full text-xs px-2 py-1">
+            {song.title}
+          </div>
+        </a>
+      ) : (
+        <div>
+          <SongVinyl title={song.title} />
+          <div className="hidden group-hover:flex mt-2 w-fit mx-auto text-end transition-all bg-black opacity-20 rounded-full text-xs px-2 py-1">
+            {song.title}
+          </div>
         </div>
-      </a>
+      )}
+
       <SongDescriptionCard
         title={song.title}
         artist={song.artist}
