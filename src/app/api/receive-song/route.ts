@@ -20,7 +20,7 @@ export async function GET() {
     const randomIndex = Math.floor(Math.random() * maxIndex) + 1;
     console.log("index:", randomIndex);
 
-    const result = await sql`SELECT * FROM songs WHERE index = ${randomIndex};`;
+    const result = await sql`SELECT * FROM songs WHERE index = 1;`;
 
     const songRes = result.rows[0];
     const song: DisplaySong = {
@@ -32,7 +32,7 @@ export async function GET() {
     };
 
     const response = NextResponse.json({ song: song }, { status: 200 });
-    // response.headers.set("Cache-Control", "no-store, max-age=0");
+    response.headers.set("Cache-Control", "no-store, max-age=0");
 
     return response;
   } catch (error) {
