@@ -44,22 +44,14 @@ export default function SendViewStepTwoSend() {
         onClick={() => showStoryModal(!storyModal)}
       />
 
-      <div className="flex flex-col gap-2 md:gap-0 md:flex-row justify-between">
-        <Link href="/send/step-two/write" className="h-full flex w-full">
-          <InputLabel
-            name="← rewrite"
-            className="text-xl py-1 pr-10 uppercase w-full md:w-1/2 md:justify-end bg-opacity-20 hover:bg-opacity-50 hover:drop-shadow-letter"
-          />
-        </Link>
-        <div
-          onClick={() => sendSongToDatabase()}
-          className="h-full flex w-full"
-        >
-          <InputLabel
-            name="send →"
-            className="text-xl py-1 pr-10 uppercase w-full md:w-1/2 justify-end bg-opacity-20 hover:bg-opacity-50 hover:drop-shadow-letter"
-          />
-        </div>
+      <div
+        onClick={() => sendSongToDatabase()}
+        className="h-full flex justify-end w-full"
+      >
+        <InputLabel
+          name="send →"
+          className="text-xl py-1 pr-10 uppercase w-full md:w-1/3 justify-end bg-opacity-20 hover:bg-opacity-50 hover:drop-shadow-letter"
+        />
       </div>
     </div>
   );

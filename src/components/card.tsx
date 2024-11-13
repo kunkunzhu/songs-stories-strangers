@@ -38,7 +38,7 @@ const Card = ({ className, children }: ComponentPropsType) => {
         />
         <div
           className={cn(
-            "w-[600px] md:w-[700px] bg-white bg-opacity-5 h-[500px] md:h-[350px] border rounded-xl p-6 md:p-12",
+            "w-[250px] md:w-[700px] bg-white bg-opacity-5 h-[500px] md:h-[350px] border rounded-xl p-6 md:p-12",
             className
           )}
         >

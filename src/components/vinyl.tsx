@@ -118,7 +118,7 @@ export const InputSongBase = ({
       )}
     >
       {imageNode}
-      <div className="md:mr-8 mt-2 w-full md:w-[22vw]">
+      <div className="md:mr-8 mt-2 w-full md:w-[400px]">
         <SongDescriptionCard title={song.title} artist={song.artist} />
       </div>
     </div>

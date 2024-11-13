@@ -267,7 +267,7 @@ export const SongsSearchResultDisplay = ({
   setSong: any;
 }) => {
   return (
-    <div className="flex flex-col border rounded-lg overflow-y-scroll -mt-10 max-h-[25vh] md:max-h-[12vh]">
+    <div className="flex flex-col border rounded-lg overflow-y-scroll -mt-10 max-h-[50px] md:max-h-[125px]">
       {songs.map((song, index) => (
         <div key={index}>
           <SongSearchResult song={song} curSong={curSong} setSong={setSong} />
