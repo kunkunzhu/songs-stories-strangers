@@ -67,7 +67,7 @@ export default function ReceiveView() {
           <TapeLink
             href="/send/step-one"
             text="send a song"
-            className="rounded-full justify-center font-mono"
+            className="rounded-full justify-center bg-white bg-opacity-10 font-mono"
           />
         </div>
       </div>

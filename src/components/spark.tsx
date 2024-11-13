@@ -18,17 +18,12 @@ const Spark = ({ href, state = "in-progress" }: SparkI) => {
         className="drop-shadow-spark ease-in hover:drop-shadow-spark-hover"
       />
       {state == "start" ? (
-        <div className="absolute font-mono hidden opacity-75 tracking-widest -mx-12 italic p-2 group-hover:block">
+        <div className="absolute font-mono hidden opacity-75 tracking-widest -mx-10 italic p-2 group-hover:block">
           what is this?
         </div>
       ) : (
-        <div className="absolute font-mono tracking-widest p-2 -mx-20 my-4 text-center hidden group-hover:flex flex-col gap-1">
-          <span className="px-6 opacity-75 uppercase">return to home</span>
-          {state != "finish" && (
-            <span className="text-xs opacity-50 italic">
-              all progress will be lost.
-            </span>
-          )}
+        <div className="absolute font-mono tracking-widest p-2 -mx-10 my-2 text-center hidden group-hover:flex flex-col gap-1">
+          <span className="px-6 opacity-75 uppercase">exit</span>
         </div>
       )}
     </Link>

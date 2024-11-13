@@ -48,7 +48,7 @@ export const TapeLink = ({ href, text, className }: TapeLinkPropsType) => {
     <Link
       href={href}
       className={cn(
-        "flex border w-full md:w-1/2 h-fit px-5 py-2 md:py-4 font-mono tracking-wider bg-black bg-opacity-20 text-2xl md:text-lg hover:bg-opacity-50",
+        "flex border w-full md:w-1/2 h-fit px-5 py-2 md:py-4 font-mono tracking-wider transition-all bg-black bg-opacity-20 text-2xl md:text-lg hover:bg-opacity-50",
         className
       )}
     >
