@@ -18,19 +18,19 @@ export default function About() {
           </span>
           <span>
             I have vivid memories and emotions attached to certain songs. And my
-            hunch is that you do, as well. Here, you could send out a song that
-            hold meaning to you and, in return, receive a song that hold meaning
-            for a complete stranger.{" "}
+            hunch is that you might, as well. Here, you could send out a song
+            that hold meaning to you and, in return, receive a song that holds
+            meaning for a complete stranger.{" "}
           </span>
           <span>
-            The reason that I created this app is because in an age where the
-            music discovery experience is dominated by algorithmic
-            recommendations, it feels serendipitous to discover new songs by
-            learning about the songs that hold significance to someone else. And
-            that, at the end of the day, we are connected by stories. I cherish
-            the moments when we recognize pieces of ourselves in someone else’s
-            story, even that of a complete stranger, and realize how we are all
-            more connected than we think.
+            I created this app because in an age where the music discovery
+            experience is largely dominated by algorithmic recommendations, it
+            feels serendipitous to discover new music through learning about the
+            songs that hold significance for someone else. And that, at the end
+            of the day, we are all connected by stories. I cherish the moments
+            when we recognize pieces of ourselves in someone else’s story, even
+            that of a complete stranger, and realize how we are all more
+            connected than we think.
           </span>
         </div>
         <div className="flex w-full opacity-25">
