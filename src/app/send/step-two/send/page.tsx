@@ -18,7 +18,18 @@ export default function SendViewStepTwoSend() {
   const [storyModal, showStoryModal] = useState<boolean>(false);
 
   if (!song || !story) {
-    return <div>NO SONG</div>;
+    // TO DO: Make this informative
+    return (
+      <div className="flex justify-center items-center">
+        Something went wrong!
+        <Link href="/send/step-two/write">
+          <InputLabel
+            name="← go back"
+            className="text-xl py-1 pr-10 uppercase w-full md:w-1/3 justify-end bg-opacity-20 hover:bg-opacity-50 hover:drop-shadow-letter"
+          />
+        </Link>
+      </div>
+    );
   }
 
   const sendSongToDatabase = () => {
