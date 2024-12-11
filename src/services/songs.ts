@@ -73,8 +73,6 @@ export const searchSongs = async ({
 export const getSong = async ({ trackId, setError }: getSongProps) => {
   const authToken = await getAuth();
 
-  console.log("authToken", authToken);
-
   if (authToken) {
     try {
       const response = await fetch(
@@ -93,7 +91,7 @@ export const getSong = async ({ trackId, setError }: getSongProps) => {
       }
 
       const songResponse = await response.json();
-      console.log(songResponse);
+
       const song: Song = {
         title: songResponse.name,
         artist: songResponse.artists[0].name,
@@ -131,7 +129,7 @@ export const sendSong = async ({ song, story }: sendSongProps) => {
 export const receiveSong = async () => {
   try {
     const seed = Math.random();
-    console.log("SEED", seed);
+
     const response = await fetch(`/api/receive-song?seed=${seed}`, {
       method: "GET",
     });
@@ -141,7 +139,6 @@ export const receiveSong = async () => {
     }
 
     const data = await response.json();
-    console.log(data);
 
     return data.song;
   } catch (error) {

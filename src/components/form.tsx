@@ -15,8 +15,6 @@ export const SongForm = ({ setSong }: { setSong: any }) => {
   const [error, setError] = useState<boolean>(false);
 
   const submitSong = () => {
-    // form submission not working ?! (workaround solution)
-
     setError(false);
     const randomId = v4();
 
