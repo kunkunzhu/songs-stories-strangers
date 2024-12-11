@@ -5,6 +5,7 @@ import { DisplaySong, Song } from "@/types";
 import { InputLabel } from "./input";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useRef } from "react";
 
 const SongVinyl = ({ title }: { title: string }) => {
   return (
@@ -86,29 +87,51 @@ export const SongDescriptionCard = ({
 };
 
 export const SongDisplay = ({ song }: { song: DisplaySong }) => {
+  const { title, artist, story, playURL } = song;
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const playSong = ({ playURL }: { playURL: string }) => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio(playURL);
+    }
+
+    audioRef.current.currentTime = 0;
+    audioRef.current.play().catch((error) => {
+      console.error("WAAHHH", error);
+    });
+  };
+
+  const stopPlayingSong = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  };
+
   return (
     <div className="flex flex-col gap-2 md:gap-0 md:flex-row w-full justify-between">
       {song.playURL ? (
-        <a target="_blank" href={song.playURL} className="group">
-          <SongVinyl title={song.title} />
+        <div
+          onMouseEnter={() => playURL && playSong({ playURL })}
+          onMouseLeave={() => stopPlayingSong()}
+          className="group"
+        >
+          <SongVinyl title={title} />
           <div className="hidden group-hover:flex mt-2 w-fit mx-auto text-end transition-all bg-black opacity-20 rounded-full text-xs px-2 py-1">
-            {song.title}
+            {title}
           </div>
-        </a>
+        </div>
       ) : (
         <div>
-          <SongVinyl title={song.title} />
+          <SongVinyl title={title} />
           <div className="hidden group-hover:flex mt-2 w-fit mx-auto text-end transition-all bg-black opacity-20 rounded-full text-xs px-2 py-1">
-            {song.title}
+            {title}
           </div>
         </div>
       )}
 
-      <SongDescriptionCard
-        title={song.title}
-        artist={song.artist}
-        story={song.story}
-      />
+      <SongDescriptionCard title={title} artist={artist} story={story} />
     </div>
   );
 };

@@ -60,7 +60,7 @@ export default function ReceiveView() {
         <Card>
           <div className="flex h-full w-full">
             <div className="m-auto flex">
-              <BarLoader width={400} height={2} loading={loading} />
+              <BarLoader width={100} height={2} loading={loading} />
             </div>
             {!error && !loading && song && <SongDisplay song={song} />}
           </div>

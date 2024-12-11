@@ -73,10 +73,10 @@ export const SongForm = ({ setSong }: { setSong: any }) => {
         <>
           {linkDisplay ? (
             <div className="flex justify-between gap-4">
-              <InputLabel name="link" className="hidden md:block" />
+              <InputLabel name="sample" className="hidden md:block" />
               <TitleInput
-                name="link"
-                placeholder="attack a link to the song"
+                name="sample"
+                placeholder="(please make sure it's a URL to a valid MP3 file)"
                 onChange={(e: React.FormEvent<HTMLInputElement>) =>
                   setLink(e.currentTarget.value)
                 }
