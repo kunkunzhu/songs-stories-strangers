@@ -112,7 +112,9 @@ export const SongDisplay = ({ song }: { song: DisplaySong }) => {
   return (
     <div className="flex flex-col gap-2 md:gap-0 md:flex-row w-full justify-between">
       {song.playURL ? (
-        <div
+        <a
+          target="_blank"
+          href={playURL}
           onMouseEnter={() => playURL && playSong({ playURL })}
           onMouseLeave={() => stopPlayingSong()}
           className="group"
@@ -121,7 +123,7 @@ export const SongDisplay = ({ song }: { song: DisplaySong }) => {
           <div className="hidden group-hover:flex mt-2 w-fit mx-auto text-end transition-all bg-black opacity-20 rounded-full text-xs px-2 py-1">
             {title}
           </div>
-        </div>
+        </a>
       ) : (
         <div>
           <SongVinyl title={title} />
