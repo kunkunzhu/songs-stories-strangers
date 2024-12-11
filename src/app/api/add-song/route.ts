@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   try {
     const { songId, title, artist, playURL, story } = await request.json();
 
-    if (!songId || !title || !artist || !playURL || !story) {
+    if (!songId || !title || !artist || !story) {
       return NextResponse.json(
         { error: "Required fields are missing!" },
         { status: 400 }
